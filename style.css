@@ -1,0 +1,138 @@
+body
+{
+    background-image: url(imagens/backgroundimg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: rgba(187, 255, 0, 0.519);
+}
+
+h1
+{
+    text-align: center;
+    font: normal 50pt Arial;
+    margin-top: auto;
+}
+
+section
+{
+    background-color: rgb(193, 222, 114);
+    padding: 15px;
+    width: 800px;
+    border-radius: 24px;
+    margin: auto;
+    box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.422);
+}
+
+footer
+{
+    text-align: center;
+    margin-top: 20px;
+    text-shadow: 5px 5px 5px black;
+}
+
+div
+{
+    padding: 8px;
+    text-align: center;
+}
+
+select#qtdPlayers
+{
+    width: 35px;
+    margin-left: 0px;
+}
+
+select#playersMoney
+{
+    font: normal 15pt Arial;
+    width: 300px;
+    text-align: center;
+    margin-left: 0px;
+}
+
+::placeholder
+{
+    text-align: center;
+}
+
+input[type=checkbox]
+{
+    margin:0 12px 0 0;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+}
+
+select#selMoreMoney
+{
+    margin-left: 0px;
+}
+
+select#sellessMoney
+{
+    margin-left: 0px;
+}
+
+select
+{
+    margin-left: 30px;
+    border-radius: 8px;
+}
+
+input[type=button]
+{
+    background-color: rgb(222, 226, 215);
+    border: 50%;
+    border-radius: 18px;
+    border-color: rgb(28, 138, 0);
+    color: rgb(28, 138, 0);
+    padding: 12px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    box-shadow: 0 9px #999;
+}
+
+input[type=button]:hover
+{
+    background-color: rgb(28, 138, 0);
+    color: white;
+}
+
+input[type=button]:active
+{
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+p#indexNext
+{
+    margin-top: 35px;
+}
+
+input[type=text]
+{
+    border-radius: 8px;
+    border: 2px solid grey;
+    padding: 5px 20px;
+    box-shadow: 5px 5px 5px rgb(104, 104, 104);
+}
+
+input[type=text]:focus
+{
+    background-color: rgb(170, 207, 114);
+}
+
+p#printPlayersMoney
+{
+    background-color: rgb(183, 253, 98);
+    width: 170px;
+    text-align: center;
+    margin: auto;
+    border-radius: 10px;
+    border: 2px solid rgb(99, 99, 99);
+}
