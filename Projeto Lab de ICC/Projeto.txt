@@ -1,0 +1,440 @@
+Projeto Lab de ICC
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+struct estoque {
+    int nao_usar;
+    int codigo;
+    char nome[30];
+    float preco;
+    int estoque;
+};
+
+struct registro_de_vendas {
+    int codigo;
+    int quantidade[100];
+    int soma;
+    int dia[100];
+    int mes[100];
+    int ano[100];
+    float valor_gerado[100];
+    float valor_da_venda[100];
+};
+
+struct rank {
+    int ranking;
+    char nome[30];
+    int codigo;
+};
+
+void add_produto(struct estoque est[100], struct registro_de_vendas reg[100], int *qtd_produtos);
+void lista_produtos(struct estoque est[100], struct registro_de_vendas reg[100], int *qtd_produtos);
+void editar_produto(struct estoque est[100], struct registro_de_vendas reg[100], int *qtd_produtos);
+void eliminar_produto(struct estoque est[100], struct registro_de_vendas reg[100], int *qtd_produtos, int *qtd_vendas);
+void registrar_vendas(struct estoque est[100], struct registro_de_vendas reg[100], int *qtd_produtos, int *qtd_vendas);
+void vendas_mes(struct estoque est[100], struct registro_de_vendas reg[100], int *qtd_produtos, int *qtd_vendas);
+void vendas_produtos(struct estoque est[100], struct registro_de_vendas reg[100], int *qtd_produtos, int *qtd_vendas);
+void ranking(struct estoque est[100], struct registro_de_vendas reg[100], struct rank ran[100], int *qtd_produtos, int *qtd_vendas);
+
+int main() {
+    FILE *arq_estoque;
+    FILE *arq_vendas;
+    struct estoque est[100];
+    struct registro_de_vendas reg[100];
+    struct rank ran[100];
+    int opcao_menu, qtd_produtos = 0, qtd_vendas = 0;
+    if ((arq_estoque = fopen("estoque.txt", "rb+")) == NULL) {
+        arq_estoque = fopen("estoque.txt", "wb+");
+    }
+    if ((arq_vendas = fopen("registro de vendas.txt", "rb+")) == NULL) {
+        arq_vendas = fopen("registro de vendas.txt", "wb+");
+    }
+    setlocale(LC_ALL, "Portuguese");
+    fseek(arq_estoque, 0, SEEK_SET);
+    fread(est, sizeof(struct estoque), 100, arq_estoque);
+    fseek(arq_vendas, 0, SEEK_SET);
+    fread(reg, sizeof(struct registro_de_vendas), 100, arq_vendas);
+    fseek(arq_estoque, 0, SEEK_SET);
+    fread(&qtd_produtos, sizeof(int), 1, arq_estoque);
+    fseek(arq_vendas, 0, SEEK_SET);
+    fread(&qtd_vendas, sizeof(int), 1, arq_vendas);
+    do {
+        printf("------------------------------------------------------------\n");
+        printf("|                                                          |\n");
+        printf("|         Sistema de cadastro e vendas de produtos         |\n");
+        printf("|                                                          |\n");
+        printf("------------------------------------------------------------\n");
+        printf("Digite:\n[1] para cadastrar produtos\n[2] para mostrar lista de produtos cadastrados\n[3] para editar produtos\n[4] para eliminar produtos\n[5] para registrar vendas\n[6] para gerar relatório sobre as vendas realizadas\n[7] para gerar um ranking dos produtos mais vendidos\n[0] para sair\n");
+        scanf("%d", &opcao_menu);
+        fflush(stdin);
+        printf("\n\n\n");
+        if (opcao_menu == 1) {
+            int add_produtos;
+            do {
+                printf("Digite:\n[1] para cadastrar um novo produto\n[0] para voltar ao menu principal\n");
+                scanf("%d", &add_produtos);
+                fflush(stdin);
+                printf("\n");
+                if (add_produtos < 0 || add_produtos > 1) {
+                    printf("Digite apenas 0 ou 1!!!\n\n");
+                }
+                else if (add_produtos == 1) {
+                    add_produto(est, reg, &qtd_produtos);
+                    qtd_produtos++;
+                }
+            }while (add_produtos != 0);
+        }
+        else if (opcao_menu == 2) {
+            lista_produtos(est, reg, &qtd_produtos);
+        }
+        else if (opcao_menu == 3) {
+            int edit_prod;
+            do {
+                printf("Digite:\n[1] para editar um produto\n[0] para voltar ao menu principal\n");
+                scanf("%d", &edit_prod);
+                fflush(stdin);
+                printf("\n");
+                if (edit_prod < 0 || edit_prod > 1) {
+                    printf("Digite apenas 0 ou 1!!!\n\n");
+                }
+                else if (edit_prod == 1) {
+                    editar_produto(est, reg, &qtd_produtos);
+                }
+            }while (edit_prod != 0);
+        }
+        else if (opcao_menu == 4) {
+            int elim_prod;
+            do {
+                printf("Digite:\n[1] para eliminar um produto\n[0] para voltar ao menu principal\n");
+                scanf("%d", &elim_prod);
+                fflush(stdin);
+                printf("\n");
+                if (elim_prod < 0 || elim_prod > 1) {
+                    printf("Digite apenas 0 ou 1!!!\n\n");
+                }
+                else if (elim_prod == 1) {
+                    eliminar_produto(est, reg, &qtd_produtos, &qtd_vendas);
+                }
+            }while (elim_prod != 0);
+        }
+        else if (opcao_menu == 5) {
+            registrar_vendas(est, reg, &qtd_produtos, &qtd_vendas);
+        }
+        else if (opcao_menu == 6) {
+            int opcao_relatorio;
+            printf("\nDigite:\n[1] para gerar relatório mensal de todas as vendas\n[2] para gerar relatório sobre a venda total de um produto\n");
+            scanf("%d", &opcao_relatorio);
+            fflush(stdin);
+            if (opcao_relatorio == 1) {
+                vendas_mes(est, reg, &qtd_produtos, &qtd_vendas);
+            }
+            else if (opcao_relatorio == 2) {
+                vendas_produtos(est, reg, &qtd_produtos, &qtd_vendas);
+            }
+        }
+        else if (opcao_menu == 7) {
+            ranking(est, reg, ran, &qtd_produtos, &qtd_vendas);
+        }
+        else if (opcao_menu < 0 || opcao_menu > 7) {
+            printf("\nDigite apenas os numeros pedidos!!\n\n\n");
+        }
+        fseek(arq_estoque, 0, SEEK_SET);
+        fwrite(est, sizeof(struct estoque), 100, arq_estoque);
+        fseek(arq_vendas, 0, SEEK_SET);
+        fwrite(reg, sizeof(struct registro_de_vendas), 100, arq_vendas);
+        fseek(arq_estoque, 0, SEEK_SET);
+        fwrite(&qtd_produtos, sizeof(int), 1, arq_estoque);
+        fseek(arq_vendas, 0, SEEK_SET);
+        fwrite(&qtd_vendas, sizeof(int), 1, arq_vendas);
+    }while (opcao_menu != 0);
+    fclose(arq_estoque);
+    fclose(arq_vendas);
+    printf("Fechando o programa...\n\n");
+    system ("pause");
+    return 0;
+}
+void add_produto(struct estoque est[100], struct registro_de_vendas reg[100], int *qtd_produtos) {
+    printf("Cadastrar produto:\n\n");
+    printf("Nome do produto: ");
+    fgets(est[*qtd_produtos].nome, 29, stdin);
+    printf("Código do produto: ");
+    scanf("%d", &est[*qtd_produtos].codigo);
+    fflush(stdin);
+    printf("Preço do produto: R$");
+    scanf("%f", &est[*qtd_produtos].preco);
+    fflush(stdin);
+    printf("Estoque do produto: ");
+    scanf("%d", &est[*qtd_produtos].estoque);
+    fflush(stdin);
+    printf("\nProduto adicionado com sucesso!!!\n\n");
+    printf("\n\n");
+    system ("pause");
+    printf("\n\n");
+}
+void lista_produtos(struct estoque est[100], struct registro_de_vendas reg[100], int *qtd_produtos) {
+    int j;
+    for (j = 0; j < *qtd_produtos; j++) {
+        printf("Nome do produto: %sCódigo do produto: %d\nPreço do produto: R$%.2f\nEstoque disponível do produto: %d\n\n", est[j].nome, est[j].codigo, est[j].preco, est[j].estoque);
+    }
+    printf("\n\n");
+    system ("pause");
+    printf("\n\n");
+}
+void editar_produto(struct estoque est[100], struct registro_de_vendas reg[100], int *qtd_produtos) {
+    int j, cod, opcao, add, cod_nao_encontrado = 0;
+    printf("Digite o código do produto que deseja editar: ");
+    scanf("%d", &cod);
+    fflush(stdin);
+    for (j = 0; j < *qtd_produtos; j++) {
+        if (cod == est[j].codigo) {
+            cod_nao_encontrado++;
+            printf("\n\nNome do produto: %sCódigo do produto: %d\nPreço do produto: R$%.2f\nEstoque disponível do produto: %d\n\n", est[j].nome, est[j].codigo, est[j].preco, est[j].estoque);
+            printf("\nDigite:\n[1] para alterar o nome do produto\n[2] para alterar o preço do produto\n[3] para alterar o estoque do produto\n[4] para adicionar ao estoque do produto\n[0] para voltar\n");
+            scanf("%d", &opcao);
+            fflush(stdin);
+            if (opcao == 1) {
+                printf("\nDigite o novo nome do produto: ");
+                fgets(est[j].nome, 29, stdin);
+                fflush(stdin);
+                printf("\nNovo nome salvo com sucesso!!!\n\n");
+            }
+            else if (opcao == 2) {
+                printf("\nDigite o novo preço do produto: ");
+                scanf("%f", &est[j].preco);
+                fflush(stdin);
+                printf("\nNovo preço salvo com sucesso!!!\n\n");
+            }
+            else if (opcao == 3) {
+                printf("\nDigite o novo estoque do produto: ");
+                scanf("%d", &est[j].estoque);
+                fflush(stdin);
+                printf("\nNovo estoque salvo com sucesso!!!\n\n");
+            }
+            else if (opcao == 4) {
+                printf("\nDigite a quantidade a ser adicionada ao estoque do produto: ");
+                scanf("%d", &add);
+                fflush(stdin);
+                est[j].estoque += add;
+                printf("\nQuantidade adicionada com sucesso!!!\n\n");
+            }
+            else if (opcao == 0) {
+                break;
+            }
+        }
+    }
+    if (cod_nao_encontrado == 0) {
+        printf("\n\nCódigo não encontrado!!!");
+    }
+    printf("\n\n");
+    system ("pause");
+    printf("\n\n");
+}
+void eliminar_produto(struct estoque est[100], struct registro_de_vendas reg[100], int *qtd_produtos, int *qtd_vendas) {
+    int j, x, cod, confirmacao = 0, cod_nao_encontrado = 0;
+    printf("Digite o código do produto que será excluído: ");
+    scanf("%d", &cod);
+    fflush(stdin);
+    for (j = 0; j < *qtd_produtos; j++) {
+        if (cod == est[j].codigo) {
+            printf("\nNome do produto: %sCódigo do produto: %d", est[j].nome, est[j].codigo);
+            cod_nao_encontrado++;
+            break;
+        }
+    }
+    if (cod_nao_encontrado == 0) {
+        printf("\n\nCódigo não encontrado!!!\n\n");
+    }
+    else {
+        printf("\n\nDeseja realmente excluir esse produto?\nDigite:\n[1] para sim\n[0] para não\n");
+        scanf("%d", &confirmacao);
+        fflush(stdin);
+    }
+    if (confirmacao == 1) {
+        for (j = 0; j < *qtd_produtos; j++) {
+            if (cod == est[j].codigo) {
+                for (x = j; x < *qtd_produtos; x++) {
+                    est[x] = est[x + 1];
+                }
+                printf("\nProduto excluído com sucesso!!!\n\n");
+                (*qtd_produtos)--;
+            }
+        }
+        for (j = 0; j < *qtd_vendas; j++) {
+            if (cod == reg[j].codigo) {
+                for (x = j; x < *qtd_produtos; x++) {
+                    reg[x] = reg[x + 1];
+                }
+                (*qtd_vendas)--;
+            }
+        }
+    }
+    printf("\n\n");
+    system ("pause");
+    printf("\n\n");
+}
+void registrar_vendas(struct estoque est[100], struct registro_de_vendas reg[100], int *qtd_produtos, int *qtd_vendas) {
+    int j, cod, continuar_venda = 1, cod_nao_encontrado;
+    do {
+        printf("Digite o código do produto para registrar sua venda: ");
+        scanf("%d", &cod);
+        fflush(stdin);
+        cod_nao_encontrado = 0;
+        printf("\n");
+        for (j = 0; j < *qtd_produtos; j++) {
+            if (cod == est[j].codigo) {
+                cod_nao_encontrado++;
+                while (*qtd_vendas < 100) {
+                    printf("\nProduto: %s", est[j].nome);
+                    printf("Código: %d\n", est[j].codigo);
+                    printf("Estoque disponível: %d\n", est[j].estoque);
+                    printf("Quantidade a ser vendida: ");
+                    scanf("%d", &reg[j].quantidade[*qtd_vendas]);
+                    fflush(stdin);
+                    if (reg[j].quantidade[*qtd_vendas] <= est[j].estoque) {
+                        reg[j].soma += reg[j].quantidade[*qtd_vendas];
+                        est[j].estoque -= reg[j].quantidade[*qtd_vendas];
+                        reg[j].valor_da_venda[*qtd_vendas] = reg[j].quantidade[*qtd_vendas] * est[j].preco;
+                        reg[j].codigo = est[j].codigo;
+                    }
+                    else if (reg[j].quantidade[*qtd_vendas] > est[j].estoque) {
+                        printf("\nNão há produtos suficientes no estoque para realizar essa venda!!!\n\n");
+                        break;
+                    }
+                    printf("Data da venda:\n\n");
+                    printf("Dia: ");
+                    scanf("%d", &reg[j].dia[*qtd_vendas]);
+                    fflush(stdin);
+                    printf("Mês: ");
+                    scanf("%d", &reg[j].mes[*qtd_vendas]);
+                    fflush(stdin);
+                    printf("Ano: ");
+                    scanf("%d", &reg[j].ano[*qtd_vendas]);
+                    fflush(stdin);
+                    printf("\nVenda registrada!!!\n\n");
+                    (*qtd_vendas)++;
+                    break;
+                }
+            }
+        }
+        if (cod_nao_encontrado == 0) {
+            printf("\nCódigo não encontrado!!!\n\n");
+        }
+        printf("Deseja vender mais produtos?\nDigite:\n[1] para sim\n[0] para não\n");
+        scanf("%d", &continuar_venda);
+        fflush(stdin);
+        printf("\n\n");
+    }while (continuar_venda != 0);
+    printf("\n\n");
+    system ("pause");
+    printf("\n\n");
+}
+void vendas_mes(struct estoque est[100], struct registro_de_vendas reg[100], int *qtd_produtos, int *qtd_vendas) {
+    int j, m, a, x, mes_nao_encontrado = 0, ano_nao_encontrado = 0;
+    printf("\nDigite o ano que deseja gerar o relatório de vendas: ");
+    scanf("%d", &a);
+    fflush(stdin);
+    printf("\nDigite o mês que deseja gerar o relatório de vendas: ");
+    scanf("%d", &m);
+    fflush(stdin);
+    for (j = 0; j < *qtd_produtos; j++) {
+        for (x = 0; x < *qtd_vendas; x++) {
+            if (a == reg[j].ano[x]) {
+                ano_nao_encontrado++;
+                if (m == reg[j].mes[x]) {
+                    printf("\n");
+                    printf("Produto: %s", est[j].nome);
+                    printf("Código: %d\n", reg[j].codigo);
+                    printf("Preço: R$%.2f\n", est[j].preco);
+                    printf("Quantidade vendida: %d\n", reg[j].quantidade[x]);
+                    printf("Lucro bruto gerado na venda: R$%.2f\n", reg[j].valor_da_venda[x]);
+                    printf("Data da venda: %d/%d/%d\n\n", reg[j].dia[x], reg[j].mes[x], reg[j].ano[x]);
+                    mes_nao_encontrado++;
+                }
+            }
+        }
+    }
+    for (j = 0; j < *qtd_produtos; j++) {
+        for (x = 0; x < *qtd_vendas; x++) {
+            if (m == reg[j].mes[x]) {
+                break;
+            }
+            else if (m < 1 || m > 12) {
+                printf("\n\nO mês digitado não existe!!!\n\n");
+                mes_nao_encontrado++;
+                break;
+            }
+        }
+        break;
+    }
+    if (ano_nao_encontrado == 0 || mes_nao_encontrado == 0) {
+        printf("\n\nNenhum produto vendido no ano e mês digitados!!!\n");
+    }
+    printf("\n\n");
+    system ("pause");
+    printf("\n\n");
+}
+void vendas_produtos(struct estoque est[100], struct registro_de_vendas reg[100], int *qtd_produtos, int *qtd_vendas) {
+    int j, x, cod, cod_nao_encontrado = 0;
+    printf("\nDigite o código do produto para gerar o relatório sobre ele: ");
+    scanf("%d", &cod);
+    fflush(stdin);
+    for (j = 0; j < *qtd_produtos; j++) {
+        for (x = 0; x < *qtd_vendas; x++) {
+            if (cod == est[j].codigo) {
+                reg[j].valor_gerado[x] = reg[j].soma * est[j].preco;
+                printf("\nProduto: %s", est[j].nome);
+                printf("Código: %d\n", est[j].codigo);
+                printf("Preço: R$%.2f\n", est[j].preco);
+                printf("Quantidade total vendida: %d\n", reg[j].soma);
+                printf("Lucro bruto total gerado: R$%.2f\n\n", reg[j].valor_gerado[x]);
+                cod_nao_encontrado++;
+                break;
+            }
+        }
+    }
+    if (cod_nao_encontrado == 0) {
+        printf("\n\nCódigo não encontrado!!!\n");
+    }
+    printf("\n\n");
+    system ("pause");
+    printf("\n\n");
+}
+void ranking(struct estoque est[100], struct registro_de_vendas reg[100], struct rank ran[100], int *qtd_produtos, int *qtd_vendas) {
+    int i, j, gerador;
+    struct rank aux;
+    for (i = 0; i < *qtd_produtos; i++) {
+        ran[i].ranking = reg[i].soma;
+        strcpy(ran[i].nome, est[i].nome);
+        ran[i].codigo = est[i].codigo;
+    }
+    printf("Digite:\n[1] para gerar o ranking de produtos mais vendidos\n[0] para voltar ao menu principal\n");
+    scanf("%d", &gerador);
+    fflush(stdin);
+    if (gerador == 1) {
+        for (i = 0; i < *qtd_produtos; i++) {
+            for (j = i + 1; j < *qtd_produtos; j++) {
+                if (ran[i].ranking < ran[j].ranking) {
+                    aux = ran[i];
+                    ran[i] = ran[j];
+                    ran[j] = aux;
+                }
+            }
+        }
+        printf("\n\nRanking de produtos mais vendidos: \n\n");
+        for (i = 0; i < *qtd_produtos; i++) {
+            printf("Posição %d:\n", i + 1);
+            printf("Produto: %s", ran[i].nome);
+            printf("Código: %d\n", ran[i].codigo);
+            printf("Quantidade total vendida: %d\n\n", ran[i].ranking);
+        }
+    }
+    else if (gerador == 0) {
+        printf("\nVoltando ao menu principal!!!\n\n");
+    }
+    printf("\n\n");
+    system ("pause");
+    printf("\n\n");
+}
