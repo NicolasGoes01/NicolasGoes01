@@ -1,0 +1,13 @@
+Como jogar:
+
+- Utilize as setas para mover o Lolo
+
+- Aperte espaço para o Lolo atirar
+
+- Aperte S para salvar o jogo
+
+- Aperte L para carregar um jogo salvo
+
+- Aperte R para reiciniar a fase atual
+
+- Aperte M para ir para o menu principal
