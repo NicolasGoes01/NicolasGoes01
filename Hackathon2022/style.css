@@ -1,0 +1,419 @@
+
+.smartphone {
+  font-family: 'Roboto', serif;
+  font-size: 18px;
+  font-weight: bold;
+  position: relative;
+  width: 360px;
+  height: 640px;
+  margin: auto;
+  border: 16px black solid;
+  border-top-width: 60px;
+  border-bottom-width: 60px;
+  border-radius: 36px;
+}
+
+/* The horizontal line on the top of the device */
+.smartphone:before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 5px;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #333;
+  border-radius: 10px;
+}
+
+/* The circle on the bottom of the device */
+.smartphone:after {
+  content: '';
+  display: block;
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  left: 50%;
+  bottom: -65px;
+  transform: translate(-50%, -50%);
+  background: #333;
+  border-radius: 50%;
+}
+
+/* The screen (or content) of the device */
+.smartphone .content {
+  width: 360px;
+  height: 640px;
+  background: white;
+}
+
+.buttons
+{
+  text-align: center;
+  top: 575px;
+  position: absolute;
+}
+
+.button
+{
+  width: 40px;
+  padding: 5px 21px 5px 21px;
+}
+
+.boxer{
+    position: absolute;
+    /*background-color: saddlebrown;*/
+    height: 90%;
+    width: 100%;
+}
+
+.caixa_de_usuario{
+      text-indent: 5px;
+          position: absolute;
+    width: 70%;
+    height: 20%;
+    margin: 15px;
+    /*background-color: white;*/
+    color: #000000;
+    text-align: center;
+}
+
+.circle {
+background-color: #aaa;
+border-radius: 50%;
+width: 50px;
+height: 50px;
+overflow: hidden;
+position: relative;
+}
+
+.circle img {
+position: absolute;
+bottom: 0;
+width: 100%;
+}
+
+.menu_sanduiche{
+  position: absolute;
+  top: 30px;
+  left: 79%;
+  width: 15%;
+  height: 15%;
+  /*background-color: blue;*/
+}
+
+#imagem_user{
+  margin: 10px 0px 0px 0px;
+  width: 40px;
+  height: 40px;
+}
+
+p#sportName
+{
+top: 535px;
+position: absolute;
+font-weight: bold;
+text-align: center;
+background-color: #ffdd00;
+width: 100%;
+margin: auto;
+border-radius: 10px;
+}
+
+p#sportName2
+{
+top: 535px;
+position: absolute;
+font-weight: bold;
+text-align: center;
+background-color: rgb(211, 211, 211);
+width: 100%;
+margin: auto;
+border-radius: 10px;
+}
+
+p#average
+{
+  color: #ffdd00;
+top: 300px;
+  position: absolute;
+text-align: center;
+width: 18%;
+border-radius: 10px;
+  font-size: 35px;
+  background-color: #000000;
+}
+
+p#average2
+{
+  color: lightgray;
+top: 300px;
+  position: absolute;
+text-align: center;
+width: 18%;
+border-radius: 10px;
+  font-size: 35px;
+  left: 5px;
+  background-color: #000000;
+}
+
+p#makeit
+{
+text-align: center;
+color: #000000;
+background-color: #ffdd00;
+position: absolute;
+top: 430px;
+border-radius: 10px;
+width: 65px;
+height: 55px;
+display: flex;
+  left: 5px;
+align-items: center;
+justify-content: center;
+}
+
+.video{
+  position: absolute;
+  width: 100%;
+  height: 95%;
+  /*background-color: red;*/
+}
+
+div#bets
+{
+padding: 0 10px 0 10px;
+top: 25%;
+left: 9%;
+position: absolute;
+font-size: 22px;
+/*border: 2px solid black;*/
+border-radius: 15px;
+  background-color: #D3D3D3FF;
+}
+
+div#paldia
+{
+text-align: center;
+position: absolute;
+top: 9%;
+left: 8%;
+font-size: 28px;
+/*border: 2px solid black;*/
+  background-color: #FFDD00FF;
+padding: 4px;
+border-radius: 15px;
+}
+
+#ronaldinho{
+  width: 100%;
+  height: 100%;
+  /*text-align: center;*/
+}
+
+#nome_de_user{
+  background-color: #ffdd00;
+  width: 40%;
+  position: absolute;
+  top: 18px;
+  left: 155px;
+    border-radius: 10px;
+  border: 2px solid black;
+}
+
+#nome_de_user2{
+background-color: lightgray;
+width: 40%;
+position: absolute;
+top: 18px;
+left: 155px;
+  border-radius: 10px;
+border: 1px solid black;
+}
+
+#descricao{
+  background-color: #ffdd00;
+  font-size: 14px;
+  position: absolute;
+  /*height: 18%;*/
+  width: 100%;
+  padding: 2px;
+  text-align: justify;
+  border-radius: 10px;
+}
+
+#descricao2{
+background-color: lightgray;
+font-size: 14px;
+position: absolute;
+/*height: 18%;*/
+width: 100%;
+padding: 2px;
+text-align: justify;
+border-radius: 10px;
+}
+
+div#graph
+{
+width: 10%;
+position: relative;
+top: 15%;
+padding: 3px 0 0 0;
+left: 84%;
+}
+
+div#graph2
+{
+width: 12%;
+position: absolute;
+top: 15%;
+text-align: center;
+left: 84%;
+padding: 4px 0 0 0;
+background-color: white;
+}
+
+#profileFeatures{
+  font-size: 14px;
+  text-align: left;
+  /*background-color: red;*/
+}
+
+#nomedocara{
+  /*border: 2px solid black;*/
+padding: 10px 10px 10px 10px;
+position: absolute;
+top: 18%;
+  width: 32%;
+left: 9%;
+  border-radius: 15px;
+  background-color: lightgray;
+}
+
+div#profileDescription
+{
+      background-color: lightgray;
+
+/*border: 2px solid black;*/
+padding: 10px 10px 10px 10px;
+position: absolute;
+top: 26%;
+  width: 32%;
+left: 9%;
+      border-radius: 15px;
+
+}
+
+div#profileChallenges
+{
+      background-color: lightgray;
+
+/*border: 2px solid black;*/
+padding: 10px 10px 10px 10px;
+position: absolute;
+top: 18%;
+      width: 32%;
+  border-radius: 15px;
+
+left: 50%;
+}
+
+div#profileVideos
+{
+      background-color: lightgray;
+
+      border-radius: 15px;
+/*border: 2px solid black;*/
+padding: 10px 10px 10px 10px;
+position: absolute;
+top: 26%;
+      width: 32%;
+
+left: 50%;
+}
+
+div#profileSelo
+{
+position: absolute;
+top: 2%;
+left: 10%;
+}
+
+div#profileBau
+{
+  background-color: #00e4ff;
+  border-radius: 60px;
+  width: 85px;
+position: absolute;
+top: 2%;
+right: 10%;
+}
+
+#botaofaztudo{
+  position: absolute;
+  width: 60px;
+  top: 350px;
+  left: 285px;
+}
+
+#play{
+  position: absolute;
+  top: 290px;
+  left: 160px;
+}
+
+#titeredondo{
+  width: 80px;
+  position: absolute;
+  /*border: 2px solid black;*/
+  border-radius: 55%;
+  left: 145px;
+  top: 5px;
+}
+
+#square{
+      background-color: lightgray;
+
+  position: absolute;
+  width: 285px;
+  height: 320px;
+  /*border: 2px solid black;*/
+  border-radius: 40px;
+  bottom: 30px;
+  left: 33px;
+}
+
+.figurinha{
+  width: 70px;
+  height: 90px;
+  border-radius: 15px;
+  position: absolute;
+  /*border: 2px solid black;*/
+}
+
+#pele{
+  top: 95px;
+  left: 20px;
+}
+
+#gibaa{
+  top: 95px;
+  left: 110px;
+}
+#airton{
+  top: 95px;
+  left: 200px;
+}
+#guga{
+  top: 195px;
+  left: 110px;
+}
+#cesar{
+  top: 195px;
+  left: 200px;
+}
+#neymar{
+  top: 195px;
+  left: 20px;
+}
