@@ -1,5 +1,4 @@
 <h1 align="center">Oi 👋, eu sou Nicolas</h1>
-<h3 align="center">Apaixonado por programação e segurança da informação.</h3>
 
 - 🌱 Atualmente, estou cursando **sistemas de informação na USP.**
 
