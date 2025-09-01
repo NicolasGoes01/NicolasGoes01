@@ -1,7 +1,5 @@
 <h1 align="center">Oi 👋, eu sou Nicolas</h1>
 
-- 🌱 Atualmente, estou cursando **sistemas de informação na USP.**
-
 - 👨‍💻 Meus projeto estão disponíveis em [https://github.com/NicolasGoes01/NicolasGoes01.git](https://github.com/NicolasGoes01/NicolasGoes01.git)
 
 - 📫 Você pode me encontrar através do e-mail **nicolasgoes1@hotmail.com**
